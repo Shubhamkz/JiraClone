@@ -1,0 +1,21 @@
+// src/components/projects/Board/BoardView.client.js
+'use client';
+
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
+
+const BoardView = dynamic(
+  () => import('./BoardView'),
+  { 
+    ssr: false,
+    loading: () => <div>Loading...</div>
+  }
+);
+
+export default function BoardViewWrapper(props) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BoardView {...props} />
+    </Suspense>
+  );
+}
