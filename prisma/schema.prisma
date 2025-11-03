@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,86 +8,81 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  name       String    @db.VarChar(255)
-  email      String    @unique @db.VarChar(255)
-  password   String    @db.VarChar(255)
-  avatar_url String?   @db.VarChar(255)
-  createdAt  DateTime  @default(now()) @map("created_at")
-  updatedAt  DateTime  @default(now()) @map("updated_at")
-  
-  ownedProjects Project[] @relation("ProjectOwner")
-  memberProjects ProjectMember[]
-  assignedTickets Ticket[] @relation("TicketAssignee")
-  reportedTickets Ticket[] @relation("TicketReporter")
-  comments Comment[]
-  activities Activity[]
+  id              Int             @id @default(autoincrement())
+  name            String          @db.VarChar(255)
+  email           String          @unique @db.VarChar(255)
+  password        String          @db.VarChar(255)
+  avatar_url      String?         @db.VarChar(255)
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @default(now()) @map("updated_at")
+  activities      Activity[]
+  comments        Comment[]
+  ownedProjects   Project[]       @relation("ProjectOwner")
+  memberProjects  ProjectMember[]
+  assignedTickets Ticket[]        @relation("TicketAssignee")
+  reportedTickets Ticket[]        @relation("TicketReporter")
 }
 
 model Project {
-  id          Int       @id @default(autoincrement())
-  name        String    @db.VarChar(255)
+  id          Int             @id @default(autoincrement())
+  name        String          @db.VarChar(255)
   description String?
-  key         String    @unique @db.VarChar(10)
-  ownerId     Int       @map("owner_id")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @default(now()) @map("updated_at")
-  
-  owner      User      @relation("ProjectOwner", fields: [ownerId], references: [id])
-  members    ProjectMember[]
-  sprints    Sprint[]
-  tickets    Ticket[]
-  activities Activity[]
+  key         String          @unique @db.VarChar(10)
+  ownerId     Int             @map("owner_id")
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @default(now()) @map("updated_at")
+  activities  Activity[]
+  owner       User            @relation("ProjectOwner", fields: [ownerId], references: [id])
+  members     ProjectMember[]
+  sprints     Sprint[]
+  tickets     Ticket[]
 }
 
 model ProjectMember {
   projectId Int     @map("project_id")
   userId    Int     @map("user_id")
   role      String  @default("member") @db.VarChar(50)
-  
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id])
-  
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id])
+
   @@id([projectId, userId])
 }
 
 model Sprint {
-  id         Int       @id @default(autoincrement())
-  name       String    @db.VarChar(255)
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(255)
   goal       String?
-  startDate  DateTime? @map("start_date")
-  endDate    DateTime? @map("end_date")
-  projectId  Int       @map("project_id")
-  status     String    @default("planned") @db.VarChar(20)
-  createdAt  DateTime  @default(now()) @map("created_at")
-  updatedAt  DateTime  @default(now()) @map("updated_at")
-  
-  project Project @relation(fields: [projectId], references: [id])
-  tickets Ticket[]
+  startDate  DateTime?  @map("start_date")
+  endDate    DateTime?  @map("end_date")
+  projectId  Int        @map("project_id")
+  status     String     @default("planned") @db.VarChar(20)
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @default(now()) @map("updated_at")
   activities Activity[]
+  project    Project    @relation(fields: [projectId], references: [id])
+  tickets    Ticket[]
 }
 
 model Ticket {
-  id          Int       @id @default(autoincrement())
-  title       String    @db.VarChar(255)
+  id          Int            @id @default(autoincrement())
+  title       String         @db.VarChar(255)
   description String?
   type        TicketType
-  status      TicketStatus @default(backlog)  // Removed quotes
-  priority    TicketPriority @default(medium) // Removed quotes
-  storyPoints Int?      @map("story_points")
-  projectId   Int       @map("project_id")
-  sprintId    Int?      @map("sprint_id")
-  assigneeId  Int?      @map("assignee_id")
-  reporterId  Int       @map("reporter_id")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @default(now()) @map("updated_at")
-  
-  project  Project @relation(fields: [projectId], references: [id])
-  sprint   Sprint? @relation(fields: [sprintId], references: [id])
-  assignee User?   @relation("TicketAssignee", fields: [assigneeId], references: [id])
-  reporter User    @relation("TicketReporter", fields: [reporterId], references: [id])
-  comments Comment[]
-  activities Activity[]
+  status      TicketStatus   @default(backlog)
+  priority    TicketPriority @default(medium)
+  storyPoints Int?           @map("story_points")
+  projectId   Int            @map("project_id")
+  sprintId    Int?           @map("sprint_id")
+  assigneeId  Int?           @map("assignee_id")
+  reporterId  Int            @map("reporter_id")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @default(now()) @map("updated_at")
+  activities  Activity[]
+  comments    Comment[]
+  assignee    User?          @relation("TicketAssignee", fields: [assigneeId], references: [id])
+  project     Project        @relation(fields: [projectId], references: [id])
+  reporter    User           @relation("TicketReporter", fields: [reporterId], references: [id])
+  sprint      Sprint?        @relation(fields: [sprintId], references: [id])
 }
 
 model Comment {
@@ -98,25 +92,23 @@ model Comment {
   userId    Int      @map("user_id")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
-  
-  ticket Ticket @relation(fields: [ticketId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
+  ticket    Ticket   @relation(fields: [ticketId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Activity {
-  id        Int      @id @default(autoincrement())
+  id        Int          @id @default(autoincrement())
   type      ActivityType
-  message   String   @db.Text        // human-readable message
-  userId    Int?     @map("user_id") // who performed this action
-  projectId Int?     @map("project_id")
-  ticketId  Int?     @map("ticket_id")
-  sprintId  Int?     @map("sprint_id")
-  createdAt DateTime @default(now()) @map("created_at")
-
-  user    User?    @relation(fields: [userId], references: [id])
-  project Project? @relation(fields: [projectId], references: [id])
-  ticket  Ticket?  @relation(fields: [ticketId], references: [id])
-  sprint  Sprint?  @relation(fields: [sprintId], references: [id])
+  message   String
+  userId    Int?         @map("user_id")
+  projectId Int?         @map("project_id")
+  ticketId  Int?         @map("ticket_id")
+  sprintId  Int?         @map("sprint_id")
+  createdAt DateTime     @default(now()) @map("created_at")
+  project   Project?     @relation(fields: [projectId], references: [id])
+  sprint    Sprint?      @relation(fields: [sprintId], references: [id])
+  ticket    Ticket?      @relation(fields: [ticketId], references: [id])
+  user      User?        @relation(fields: [userId], references: [id])
 }
 
 enum ActivityType {
@@ -125,21 +117,18 @@ enum ActivityType {
   USER_DELETED
   USER_LOGIN
   USER_LOGOUT
-
   PROJECT_CREATED
   PROJECT_UPDATED
   PROJECT_DELETED
   PROJECT_MEMBER_ADDED
   PROJECT_MEMBER_REMOVED
   PROJECT_MEMBER_ROLE_CHANGED
-
   SPRINT_CREATED
   SPRINT_UPDATED
   SPRINT_DELETED
   SPRINT_STARTED
   SPRINT_COMPLETED
   SPRINT_CLOSED
-
   TICKET_CREATED
   TICKET_UPDATED
   TICKET_DELETED
@@ -148,11 +137,9 @@ enum ActivityType {
   TICKET_STATUS_CHANGED
   TICKET_PRIORITY_CHANGED
   TICKET_MOVED_TO_SPRINT
-
   COMMENT_ADDED
   COMMENT_UPDATED
   COMMENT_DELETED
-
   ACTIVITY_LOG_CLEARED
   SYSTEM_MIGRATION
   NOTIFICATION_SENT
