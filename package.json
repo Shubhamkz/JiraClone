@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@heroicons/react": "^2.2.0",
     "@prisma/client": "^6.11.1",
     "bcryptjs": "^3.0.2",
@@ -18,7 +19,6 @@
     "next": "15.3.5",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.60.0",

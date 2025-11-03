@@ -1,8 +1,8 @@
 "use client";
 
-import { Draggable } from "react-beautiful-dnd";
 import Avatar from "@/components/ui/Avatar";
 import { getPriorityIcon, getTypeIcon } from "@/lib/utils";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 export default function Ticket({
   ticket,

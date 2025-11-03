@@ -1,7 +1,7 @@
 "use client";
 
 // src/components/projects/Board/Column.js
-import { Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Ticket from "./Ticket";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import CreateTicketForm from "./CreateTicketForm";

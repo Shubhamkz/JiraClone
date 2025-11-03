@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Column from "./Column";
 import TicketModal from "./TicketModal";
 import { updateTicketStatus } from "@/lib/api";
