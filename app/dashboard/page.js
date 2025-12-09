@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "@/contexts/AuthContext";
 import { useState, useEffect } from "react";
 import {
   ChartBarIcon,
@@ -17,7 +16,7 @@ import TimeTrackDashboard from "@/components/billing/TimeTrackDashboard";
 import NewProject from "@/components/projects/settings/NewProject";
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const user = null;
   const [projects, setProjects] = useState([]);
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
