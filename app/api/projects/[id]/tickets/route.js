@@ -4,7 +4,9 @@ import prisma from "@/lib/db"; // adjust this path to where your prisma client i
 // GET /api/projects/:projectId/tickets
 export async function GET(request, { params }) {
   try {
-    const projectId = parseInt(params.id);
+    const param = await params;
+
+    const projectId = parseInt(param.id);
 
     if (isNaN(projectId)) {
       return NextResponse.json(

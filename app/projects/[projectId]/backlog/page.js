@@ -2,15 +2,17 @@ import ProjectNavbar from '@/components/ProjectNavbar';
 import BacklogItem from '@/components/projects/Backlog/BacklogItem';
 import Filters from '@/components/projects/Backlog/Filters';
 import { getProject, getTickets, getSprints } from "@/lib/api";
+import { cookies } from "next/headers";
 
 export default async function BacklogPage({ params }) {
   const { projectId } = params;
+  const cookieHeader = await cookies().toString();
   
   // Fetch data in parallel
   const [project, tickets, sprints] = await Promise.all([
-    getProject(projectId),
-    getTickets(projectId),
-    getSprints(projectId),
+    getProject(projectId, cookieHeader),
+    getTickets(projectId, null, cookieHeader),
+    getSprints(projectId, cookieHeader),
   ]);
 
   return (

@@ -2,16 +2,19 @@ import ProjectNavbar from "@/components/ProjectNavbar";
 import BoardView from "@/components/projects/Board/BoardView";
 import BoardViewWrapper from "@/components/projects/Board/BoardViewWrapper";
 import { getProject, getTickets } from "@/lib/api";
+import { cookies } from "next/headers";
+
 
 export default async function BoardPage({ params }) {
   // No need to await params - it's automatically resolved in Server Components
   const { projectId } = await params;
-
+  const cookieHeader = await cookies().toString();
+ 
   try {
     // Fetch project and tickets in parallel
     const [project, tickets] = await Promise.all([
-      getProject(projectId),
-      getTickets(projectId),
+      getProject(projectId, cookieHeader),
+      getTickets(projectId, null, cookieHeader),
     ]);
 
     return (
