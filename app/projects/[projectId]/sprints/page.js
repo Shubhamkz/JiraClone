@@ -1,14 +1,16 @@
 import { getProject, getSprints } from "@/lib/api";
 import SprintsView from "@/components/projects/Sprints/SprintsView";
 import ProjectNavbar from "@/components/ProjectNavbar";
+import { cookies } from "next/headers";
 
 export default async function SprintsPage({ params }) {
   const { projectId } = params;
+  const cookieHeader = await cookies().toString();
 
   try {
     const [project, sprints] = await Promise.all([
-      getProject(projectId),
-      getSprints(projectId),
+      getProject(projectId, cookieHeader),
+      getSprints(projectId, cookieHeader),
     ]);
 
     return (

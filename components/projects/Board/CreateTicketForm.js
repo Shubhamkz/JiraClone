@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { createTicket } from "@/lib/api";
+import { useSession } from "next-auth/react";
 
 export default function CreateTicketForm({
   status,
   projectKey,
   onCancel,
   onSuccess,
+  projectId
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("story");
   const [priority, setPriority] = useState("medium");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,10 +27,8 @@ export default function CreateTicketForm({
         type,
         priority,
         status,
-        projectId: 2,
-        sprintId: 3,
-        assigneeId: 1,
-        reporterId: 1,
+        projectId: projectId,
+        reporterId: session?.user?.id || null,
       });
       onSuccess(newTicket);
     } catch (error) {

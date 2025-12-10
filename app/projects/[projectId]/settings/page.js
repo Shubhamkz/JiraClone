@@ -3,13 +3,15 @@ import DangerZone from '@/components/projects/settings/DangerZone';
 import TeamMembers from '@/components/projects/settings/TeamMembers';
 import { getProject, getUsers } from '@/lib/api';
 import ProjectNavbar from '@/components/ProjectNavbar';
+import { cookies } from 'next/headers';
 
 export default async function ProjectSettingsPage({ params }) {
   const { projectId } = params;
+  const cookieHeader = await cookies().toString();
   
   const [project, users] = await Promise.all([
-    getProject(projectId),
-    getUsers(),
+    getProject(projectId, cookieHeader),
+    getUsers({}, cookieHeader),
   ]);
 
   return (

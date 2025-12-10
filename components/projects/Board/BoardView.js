@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
 import Column from "./Column";
 import TicketModal from "./TicketModal";
 import { updateTicketStatus } from "@/lib/api";
+import NoTicketsPlaceholder from "@/components/Tickets/NoTicketsPlaceholder";
 
 const columns = [
   { id: "backlog", title: "Backlog" },
@@ -73,11 +74,7 @@ export default function BoardView({
     <>
       <div className="flex-1 overflow-x-auto pb-4">
         {tickets.length === 0 ? (
-          <div className="text-center py-8">
-            <p className="text-gray-500">
-              No tickets found. Create your first ticket!
-            </p>
-          </div>
+          <NoTicketsPlaceholder projectId={projectId}/>
         ) : (
           <DragDropContext onDragEnd={onDragEnd}>
             <div className="flex space-x-4 min-w-max">
@@ -89,6 +86,7 @@ export default function BoardView({
                   onTicketClick={setSelectedTicket}
                   projectKey={projectKey}
                   setIsModalOpen={setIsModalOpen}
+                  projectId={projectId}
                 />
               ))}
             </div>
