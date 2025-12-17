@@ -6,7 +6,8 @@ import { cookies } from "next/headers";
 
 export default async function BacklogPage({ params }) {
   const { projectId } = params;
-  const cookieHeader = await cookies().toString();
+  const cookie = await cookies();
+  const cookieHeader = cookie.toString();
 
   // Fetch data in parallel
   const [project, tickets, sprints] = await Promise.all([

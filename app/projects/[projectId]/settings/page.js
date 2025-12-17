@@ -7,7 +7,8 @@ import { cookies } from 'next/headers';
 
 export default async function ProjectSettingsPage({ params }) {
   const { projectId } = params;
-  const cookieHeader = await cookies().toString();
+  const cookie = await cookies();
+  const cookieHeader = cookie.toString();
   
   const [project, users] = await Promise.all([
     getProject(projectId, cookieHeader),

@@ -8,7 +8,8 @@ import { cookies } from "next/headers";
 export default async function BoardPage({ params }) {
   // No need to await params - it's automatically resolved in Server Components
   const { projectId } = await params;
-  const cookieHeader = await cookies().toString();
+  const cookie = await cookies();
+  const cookieHeader = cookie.toString();
  
   try {
     // Fetch project and tickets in parallel

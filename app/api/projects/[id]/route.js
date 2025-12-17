@@ -10,6 +10,8 @@ export async function GET(request, { params }) {
     //   return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     // }
 
+    const param = await params;
+
     const currentUser = {
       id: 1,
       name: "John Doe",
@@ -18,7 +20,7 @@ export async function GET(request, { params }) {
     };
 
     const project = await prisma.project.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(param.id) },
       include: {
         owner: {
           select: {
@@ -82,6 +84,8 @@ export async function GET(request, { params }) {
 
 // UPDATE a project
 export async function PUT(request, { params }) {
+  const param = await params;
+
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
@@ -96,7 +100,7 @@ export async function PUT(request, { params }) {
 
     // First check if project exists and user is owner
     const existingProject = await prisma.project.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(param.id) },
       include: {
         members: true,
       },
@@ -114,7 +118,7 @@ export async function PUT(request, { params }) {
     }
 
     const updatedProject = await prisma.project.update({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(param.id) },
       data: {
         name: body.name,
         description: body.description,
@@ -155,6 +159,7 @@ export async function PUT(request, { params }) {
 
 // DELETE a project
 export async function DELETE(request, { params }) {
+  const param = await params;
   try {
     // const currentUser = await getCurrentUser();
     // if (!currentUser) {
@@ -170,7 +175,7 @@ export async function DELETE(request, { params }) {
 
     // First check if project exists and user is owner
     const existingProject = await prisma.project.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(param.id) },
     });
 
     if (!existingProject) {
@@ -185,7 +190,7 @@ export async function DELETE(request, { params }) {
     }
 
     await prisma.project.delete({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(param.id) },
     });
 
     return NextResponse.json(

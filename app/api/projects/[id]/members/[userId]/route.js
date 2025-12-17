@@ -4,6 +4,7 @@ import { getCurrentUser } from '@/lib/auth';
 
 // UPDATE project member role
 export async function PUT(request, { params }) {
+  const param = await params;
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
@@ -15,7 +16,7 @@ export async function PUT(request, { params }) {
 
     // Check if current user is project owner
     const project = await prisma.project.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(param.id) },
     });
 
     if (!project) {
@@ -76,6 +77,7 @@ export async function PUT(request, { params }) {
 
 // REMOVE member from project
 export async function DELETE(request, { params }) {
+  const param = await params;
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
@@ -87,7 +89,7 @@ export async function DELETE(request, { params }) {
 
     // Check if current user is project owner
     const project = await prisma.project.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(param.id) },
     });
 
     if (!project) {

@@ -56,6 +56,7 @@ export async function GET(request, { params }) {
 
 // ADD a member to a project
 export async function POST(request, { params }) {
+  const param = await params;
   try {
     const currentUser = await getCurrentUser();
     if (!currentUser) {
@@ -67,7 +68,7 @@ export async function POST(request, { params }) {
 
     // Check if current user is project owner
     const project = await prisma.project.findUnique({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(param.id) },
     });
 
     if (!project) {
