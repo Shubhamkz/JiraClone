@@ -23,8 +23,6 @@ export default function LoginPage() {
       redirect: false,
     });
 
-    console.log("Login result:😍😍😍😍😍😍😍😍😂😂😂😂😂😂", result);
-
     if (result.error) {
       setError("Invalid email or password");
     } else {

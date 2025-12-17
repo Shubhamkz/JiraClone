@@ -10,8 +10,6 @@ export default async function TicketPage({ params }) {
       getProject(projectId)
     ]);
 
-    
-
     return (
       <div className="max-w-4xl mx-auto p-6">
         <TicketDetail ticket={ticket} project={project} />
