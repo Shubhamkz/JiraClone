@@ -33,9 +33,9 @@ export async function POST(request) {
 
     await logActivity({
       type: "TICKET_CREATED", // Possible types: PROJECT_CREATED, TICKET_CREATED, etc.
-      message: `Project was created`,
-      userId: body.assigneeId ? parseInt(body.assigneeId) : null,
-      projectId: body.projectId,
+      message: `Ticket was created`,
+      userId: body.reporterId ? parseInt(body.reporterId) : null,
+      projectId: parseInt(body.projectId),
     });
 
     const newTicket = await prisma.ticket.create({
