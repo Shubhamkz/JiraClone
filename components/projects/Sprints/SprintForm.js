@@ -54,7 +54,7 @@ export default function SprintForm({ projectId, onSuccess, initialData }) {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-2 focus:border-blue-500 focus:ring-blue-500"
           required
         />
       </div>
@@ -65,7 +65,7 @@ export default function SprintForm({ projectId, onSuccess, initialData }) {
           value={goal}
           onChange={(e) => setGoal(e.target.value)}
           rows={3}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-2 focus:border-blue-500 focus:ring-blue-500"
         />
       </div>
       
@@ -76,7 +76,7 @@ export default function SprintForm({ projectId, onSuccess, initialData }) {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-2 focus:border-blue-500 focus:ring-blue-500"
             required
           />
         </div>
@@ -87,7 +87,7 @@ export default function SprintForm({ projectId, onSuccess, initialData }) {
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-2 focus:border-blue-500 focus:ring-blue-500"
             required
           />
         </div>

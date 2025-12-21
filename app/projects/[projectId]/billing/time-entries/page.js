@@ -2,7 +2,7 @@ import { getProject, getTimeEntries } from "@/lib/api";
 import TimeEntryList from "@/components/billing/TimeEntryList";
 
 export default async function TimeEntriesPage({ params }) {
-  const { projectId } = params;
+  const { projectId } = await params;
 
   const [project, timeEntries] = await Promise.all([
     getProject(projectId),

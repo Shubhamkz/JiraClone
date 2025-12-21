@@ -4,7 +4,7 @@ import ProjectNavbar from "@/components/ProjectNavbar";
 import { cookies } from "next/headers";
 
 export default async function SprintsPage({ params }) {
-  const { projectId } = params;
+  const { projectId } = await params;
   const cookie = await cookies();
   const cookieHeader = cookie.toString();
 

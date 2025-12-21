@@ -112,7 +112,7 @@ export default function TicketModal({
                 onChange={(e) =>
                   setTicket({ ...ticket, title: e.target.value })
                 }
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-2"
                 required
               />
             </div>
@@ -127,7 +127,7 @@ export default function TicketModal({
                   setTicket({ ...ticket, description: e.target.value })
                 }
                 rows={4}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-2"
               />
             </div>
 
@@ -141,7 +141,7 @@ export default function TicketModal({
                   onChange={(e) =>
                     setTicket({ ...ticket, status: e.target.value })
                   }
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-2"
                 >
                   <option value="backlog">Backlog</option>
                   <option value="todo">To Do</option>
@@ -160,7 +160,7 @@ export default function TicketModal({
                   onChange={(e) =>
                     setTicket({ ...ticket, priority: e.target.value })
                   }
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm px-4 py-2"
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>

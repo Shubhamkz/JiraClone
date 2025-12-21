@@ -37,7 +37,7 @@ export default function Filters({ sprints }) {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleFilterChange()}
-            className="block w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 pl-10 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2"
           />
         </div>
         
@@ -55,7 +55,7 @@ export default function Filters({ sprints }) {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2"
           >
             <option value="all">All Types</option>
             <option value="story">Story</option>
@@ -70,7 +70,7 @@ export default function Filters({ sprints }) {
           <select
             value={priorityFilter}
             onChange={(e) => setPriorityFilter(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2"
           >
             <option value="all">All Priorities</option>
             <option value="low">Low</option>
@@ -85,7 +85,7 @@ export default function Filters({ sprints }) {
           <select
             value={sprintFilter}
             onChange={(e) => setSprintFilter(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2"
           >
             <option value="all">All Sprints</option>
             <option value="backlog">Backlog Only</option>

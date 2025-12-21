@@ -61,7 +61,7 @@ export default function TeamMembers({ project, availableUsers }) {
         <select
           value={selectedUser}
           onChange={(e) => setSelectedUser(e.target.value)}
-          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2"
           disabled={isProcessing || availableOptions.length === 0}
         >
           <option value="">Select a user to add...</option>

@@ -5,7 +5,7 @@ import { getProject, getTickets, getSprints } from "@/lib/api";
 import { cookies } from "next/headers";
 
 export default async function BacklogPage({ params }) {
-  const { projectId } = params;
+  const { projectId } = await params;
   const cookie = await cookies();
   const cookieHeader = cookie.toString();
 
@@ -32,8 +32,8 @@ export default async function BacklogPage({ params }) {
         <Filters sprints={sprints} />
       </div>
 
-      <div className="flex-1 overflow-auto px-6 pb-6">
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="flex-1 px-6 pb-6">
+        <div className="bg-white rounded-lg shadow">
           <div className="grid grid-cols-12 bg-gray-50 border-b border-gray-200 px-4 py-3 text-sm font-medium text-gray-500">
             <div className="col-span-1">Type</div>
             <div className="col-span-5">Title</div>
@@ -43,7 +43,7 @@ export default async function BacklogPage({ params }) {
             <div className="col-span-2">Actions</div>
           </div>
 
-          <div className="divide-y divide-gray-200 max-h-[50vh] overflow-y-scroll">
+          <div className="divide-y divide-gray-200 max-h-[50vh]">
             {tickets.length > 0 ? (
               tickets.map((ticket) => (
                 <BacklogItem
