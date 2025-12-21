@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Column from "./Column";
 import TicketModal from "./TicketModal";
@@ -19,10 +19,15 @@ export default function BoardView({
   projectId,
   initialTickets = [],
   projectKey = "PRJ",
+  onTicketCreated
 }) {
-  const [tickets, setTickets] = useState(initialTickets);
+  const [tickets, setTickets] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    setTickets(initialTickets);
+  }, [initialTickets]);
 
   // Group tickets by status
   const ticketsByStatus = columns.reduce((acc, column) => {
@@ -87,6 +92,7 @@ export default function BoardView({
                   projectKey={projectKey}
                   setIsModalOpen={setIsModalOpen}
                   projectId={projectId}
+                  onTicketCreated={onTicketCreated}
                 />
               ))}
             </div>

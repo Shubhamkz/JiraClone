@@ -7,7 +7,8 @@ export default function CreateTicketForm({
   projectKey,
   onCancel,
   onSuccess,
-  projectId
+  projectId,
+  onTicketCreated
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -31,6 +32,7 @@ export default function CreateTicketForm({
         reporterId: session?.user?.id || null,
       });
       onSuccess(newTicket);
+      onTicketCreated();
     } catch (error) {
       console.error("Failed to create ticket:", error);
     } finally {

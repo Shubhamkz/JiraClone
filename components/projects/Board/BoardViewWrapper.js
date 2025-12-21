@@ -2,6 +2,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
 const BoardView = dynamic(
@@ -13,9 +14,15 @@ const BoardView = dynamic(
 );
 
 export default function BoardViewWrapper(props) {
+  const router = useRouter();
+
+  const handleRefresh = async () => {
+    router.refresh(); 
+  };
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <BoardView {...props} />
+      <BoardView onTicketCreated={handleRefresh} {...props} />
     </Suspense>
   );
 }

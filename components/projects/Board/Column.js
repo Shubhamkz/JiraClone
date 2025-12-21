@@ -13,7 +13,8 @@ export default function Column({
   onTicketClick,
   projectKey,
   setIsModalOpen,
-  projectId
+  projectId,
+  onTicketCreated
 }) {
   const [isCreatingTicket, setIsCreatingTicket] = useState(false);
 
@@ -58,6 +59,7 @@ export default function Column({
                   setIsCreatingTicket(false);
                 }}
                 projectId={projectId}
+                onTicketCreated={onTicketCreated}
               />
             )}
 
