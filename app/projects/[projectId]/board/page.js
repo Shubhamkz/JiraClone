@@ -1,6 +1,6 @@
 import ProjectNavbar from "@/components/ProjectNavbar";
 import BoardViewWrapper from "@/components/projects/Board/BoardViewWrapper";
-import { getProject, getTickets } from "@/lib/api";
+import { getProject, getTickets, getUsers } from "@/lib/api";
 import { cookies } from "next/headers";
 
 export default async function BoardPage({ params }) {
@@ -11,9 +11,10 @@ export default async function BoardPage({ params }) {
  
   try {
     // Fetch project and tickets in parallel
-    const [project, tickets] = await Promise.all([
+    const [project, tickets, users] = await Promise.all([
       getProject(projectId, cookieHeader),
       getTickets(projectId, null, cookieHeader),
+      getUsers({}, cookieHeader),
     ]);
 
     return (
@@ -26,6 +27,7 @@ export default async function BoardPage({ params }) {
           projectId={projectId}
           initialTickets={tickets}
           projectKey={project.key}
+          users={users}
         />
       </div>
     );

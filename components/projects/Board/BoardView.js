@@ -19,7 +19,8 @@ export default function BoardView({
   projectId,
   initialTickets = [],
   projectKey = "PRJ",
-  onTicketCreated
+  onTicketCreated,
+  users
 }) {
   const [tickets, setTickets] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
@@ -102,6 +103,7 @@ export default function BoardView({
 
       {isModalOpen && (
         <TicketModal
+          users={users}
           ticket={selectedTicket}
           projectId={projectId}
           projectKey={projectKey}
