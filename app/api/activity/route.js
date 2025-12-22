@@ -13,7 +13,7 @@ export async function GET(request) {
         sprint: { select: { id: true, name: true } },
       },
       orderBy: { createdAt: "desc" },
-      take: 20, // fetch latest 20
+      take: 10, // fetch latest 20
     });
 
     return NextResponse.json(activities);
