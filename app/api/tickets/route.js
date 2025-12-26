@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { logActivity } from "@/lib/activity";
+import { ActivityType } from "@/lib/activityType";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -26,18 +27,17 @@ export async function GET(request) {
     );
   }
 }
-
+ 
 export async function POST(request) {
   try {
     const body = await request.json();
-
+    
     await logActivity({
-      type: "TICKET_CREATED", // Possible types: PROJECT_CREATED, TICKET_CREATED, etc.
-      message: `Ticket was created`,
+      type: ActivityType.TICKET_CREATED, 
       userId: body.reporterId ? parseInt(body.reporterId) : null,
       projectId: parseInt(body.projectId),
     });
-
+ 
     const newTicket = await prisma.ticket.create({
       data: {
         ...body,

@@ -1,19 +1,12 @@
 "use client";
-
+ 
 import { useEffect, useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd";
 import Column from "./Column";
 import TicketModal from "./TicketModal";
 import { updateTicketStatus } from "@/lib/api";
 import NoTicketsPlaceholder from "@/components/Tickets/NoTicketsPlaceholder";
-
-const columns = [
-  { id: "backlog", title: "Backlog" },
-  { id: "todo", title: "To Do" },
-  { id: "in_progress", title: "In Progress" },
-  { id: "in_review", title: "In Review" },
-  { id: "done", title: "Done" },
-];
+import { columns } from "@/lib/utils";
 
 export default function BoardView({
   projectId,
