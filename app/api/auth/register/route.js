@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/db";
+import { ActivityType } from "@/lib/activityType";
 
 export async function POST(request) {
   try {
@@ -40,11 +41,18 @@ export async function POST(request) {
       },
     });
 
+    await logActivity({
+      type: ActivityType.USER_CREATED,
+      message: `${user.name} just Joined us`,
+      userId: session.user.id ? parseInt(session.user.id) : null,
+      projectId: parseInt(body.projectId),
+    });
+
     return NextResponse.json(
-      { 
-        message: "User created successfully", 
+      {
+        message: "User created successfully",
         userId: user.id,
-        email: user.email
+        email: user.email,
       },
       { status: 201 }
     );

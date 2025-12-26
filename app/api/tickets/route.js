@@ -31,12 +31,6 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    
-    await logActivity({
-      type: ActivityType.TICKET_CREATED, 
-      userId: body.reporterId ? parseInt(body.reporterId) : null,
-      projectId: parseInt(body.projectId),
-    });
  
     const newTicket = await prisma.ticket.create({
       data: {
@@ -47,6 +41,20 @@ export async function POST(request) {
         reporterId: parseInt(body.reporterId),
       },
     });
+
+    const project = await prisma.project.findUnique({
+      where: {
+        id: newTicket.projectId,
+      },
+    });
+
+    await logActivity({
+      type: ActivityType.TICKET_CREATED,
+      message: `${project.key}-${newTicket.id} ticket is Created in`,
+      userId: body.reporterId ? parseInt(body.reporterId) : null,
+      projectId: parseInt(body.projectId),
+    });
+
     return NextResponse.json(newTicket, { status: 201 });
   } catch (error) {
     // Log detailed info to the server console

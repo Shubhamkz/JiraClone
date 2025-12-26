@@ -47,7 +47,7 @@ const NewProject = () => {
     console.log("Project created");
     setIsVisible(false);
   };
-
+ 
   return (
     <div>
       {isVisible && (

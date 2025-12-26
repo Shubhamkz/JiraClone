@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
+import { ActivityType } from "@/lib/activityType";
+import { logActivity } from "@/lib/activity";
+import { auth } from "@/lib/auth";
 
 // Helper function to validate project data
 const validateProjectData = (data) => {
@@ -18,23 +21,17 @@ const validateProjectData = (data) => {
 // GET all projects for the current user
 export async function GET(request) {
   try {
-    // Simulating logged-in user
-    const currentUser = {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      avatar_url: "https://example.com/avatar.jpg",
-    };
+    const session = await auth();
 
-    if (!currentUser) {
+    if (!session) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
     const projects = await prisma.project.findMany({
       where: {
         OR: [
-          { ownerId: currentUser.id },
-          { members: { some: { userId: currentUser.id } } },
+          { ownerId: parseInt(session.user.id)},
+          { members: { some: { userId:  parseInt(session.user.id)} } },
         ],
       },
       include: {
@@ -109,15 +106,9 @@ export async function GET(request) {
 // CREATE a new project
 export async function POST(request) {
   try {
-    // const currentUser = await getCurrentUser();
-    const currentUser = {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      avatar_url: "https://example.com/avatar.jpg",
-    };
+    const session = await auth();
 
-    if (!currentUser) {
+    if (!session) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
@@ -144,10 +135,10 @@ export async function POST(request) {
         name: body.name,
         description: body.description,
         key: body.key.toUpperCase(),
-        ownerId: currentUser.id,
+        ownerId: parseInt(session.user.id),
         members: {
           create: {
-            userId: currentUser.id,
+            userId: parseInt(session.user.id),
             role: "owner",
           },
         },
@@ -174,6 +165,13 @@ export async function POST(request) {
           },
         },
       },
+    });
+
+    await logActivity({
+      type: ActivityType.PROJECT_CREATED,
+      message: `New project added`,
+      userId: session.user.id ? parseInt(session.user.id) : null,
+      projectId: parseInt(newProject.id),
     });
 
     return NextResponse.json(newProject, { status: 201 });
