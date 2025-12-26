@@ -14,6 +14,9 @@ import ProgressChart from "@/components/dashboard/ProgressChart";
 import { getProjects, getRecentActivity } from "@/lib/api";
 import TimeTrackDashboard from "@/components/billing/TimeTrackDashboard";
 import NewProject from "@/components/projects/settings/NewProject";
+import Client from "@/lib/Client";
+import Loader from "@/components/ui/Loader";
+import { signOut } from "next-auth/react";
 
 export default function Dashboard() {
   const user = null;
@@ -76,11 +79,7 @@ export default function Dashboard() {
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
@@ -96,13 +95,18 @@ export default function Dashboard() {
           </p>
         </div>
         <div className="flex gap-2">
-          <NewProject />
+          <Client>
+            <NewProject refreshData={refreshData} />
+          </Client>
           <button
             onClick={refreshData}
             className="flex items-center mt-4 md:mt-0 px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             <ArrowPathIcon className="h-4 w-4 mr-2" />
             Refresh
+          </button>
+          <button onClick={() => signOut()} className="flex items-center mt-4 md:mt-0 px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+            Logout
           </button>
         </div>
       </div>

@@ -1,12 +1,25 @@
+import { useCrudMutation } from "@/lib/useCrudMutation";
 import React, { useEffect, useRef, useState } from "react";
 
-const NewProject = () => {
-  const [isVisible, setIsVisible] = useState(false);
+const initialData = {
+  name: "Musicify",
+  description: "Almost spotify clone",
+  key: "MSF",
+};
+
+const NewProject = ({ refreshData }) => {
   const popUpRef = useRef(null);
-  const [projjectData, setProjectData] = useState({
-    name: "",
-    description: "",
-    key: "",
+  const [projjectData, setProjectData] = useState(initialData);
+  const [isVisible, setIsVisible] = useState(false);
+  const createProject = useCrudMutation({
+    url: "/api/projects",
+    method: "POST",
+    invalidateKey: ["projects"],
+    onSuccessCallback: () => {
+      setIsVisible(false);
+      setProjectData(initialData);
+      refreshData();
+    },
   });
 
   const handleClickOutside = (event) => {
@@ -26,28 +39,6 @@ const NewProject = () => {
     };
   }, []);
 
-  const handleCreateProject = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("/api/projects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(projjectData),
-      });
-
-      console.log("Response:", response);
-    } catch (error) {
-      console.error("Error creating project:", error);
-    }
-
-    // Handle project creation logic here
-    console.log("Project created");
-    setIsVisible(false);
-  };
- 
   return (
     <div>
       {isVisible && (
@@ -100,10 +91,10 @@ const NewProject = () => {
                 />
               </div>
               <button
-                onClick={handleCreateProject}
+                onClick={() => createProject.mutate(projjectData)}
                 className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors"
               >
-                Create Project
+                {createProject.isLoading ? "Please wait..." : "Create project"}
               </button>
             </div>
           </div>

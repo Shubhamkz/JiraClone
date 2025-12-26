@@ -37,9 +37,7 @@ export default async function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable}`}
       >
-       <AuthProvider session={session}>
-          {children}
-        </AuthProvider>
+          <AuthProvider session={session}>{children}</AuthProvider>
       </body>
     </html>
   );
